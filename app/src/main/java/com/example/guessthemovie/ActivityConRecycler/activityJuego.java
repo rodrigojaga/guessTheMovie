@@ -39,7 +39,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
     ImageView img;
     Button btn1,btn2,btn3;
 
-    String id,nombrePeli;
+    String id,nombrePeli,uidtemp;
 
     Handler h = new Handler();
 
@@ -75,6 +75,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
             Intent intent = getIntent();
             if (intent != null) {
                 id = intent.getStringExtra("idPelicula_Key");
+                uidtemp = intent.getStringExtra("UID");
                 pa = db.getPeliculaPorID(activityJuego.this,id);
                 llenado(pa);
             }
@@ -94,7 +95,6 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
                 numerosDisponiblesS.add(i2);
             }
             randomS = new Random();
-
             asignarNombre();
         }catch(Exception e){
             Log.d("aleatorio",e.getMessage());
@@ -114,6 +114,8 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
         txt2.setText(a.getlLstPistas());
         img.setImageBitmap(a.getImagen1());
     }
+
+
 
     private void barra(boolean var) {
         if (var) {
@@ -148,6 +150,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
                                 try {
                                     Thread.sleep(100);
                                     Intent intent = new Intent(activityJuego.this, peliculasGuardadasRecyclerView.class);
+                                    intent.putExtra("UID",uidtemp);
                                     startActivity(intent);
                                 } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
@@ -245,6 +248,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(activityJuego.this, peliculasGuardadasRecyclerView.class);
                 i=0;
                 btnPressed = true;
+                intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
             }else{
@@ -256,6 +260,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(activityJuego.this, peliculasGuardadasRecyclerView.class);
                 i=0;
                 btnPressed = true;
+                intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
             }else{
@@ -267,6 +272,7 @@ public class activityJuego extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(activityJuego.this, peliculasGuardadasRecyclerView.class);
                 i=0;
                 btnPressed = true;
+                intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
             }else{

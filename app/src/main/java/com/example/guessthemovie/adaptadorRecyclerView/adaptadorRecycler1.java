@@ -18,6 +18,7 @@ import com.example.guessthemovie.ActivityConRecycler.activityJuego;
 import com.example.guessthemovie.ActivityConRecycler.addPelicula;
 import com.example.guessthemovie.ActivityConRecycler.peliculasGuardadasRecyclerView;
 import com.example.guessthemovie.DB.DBPeticiones;
+import com.example.guessthemovie.POO.player;
 import com.example.guessthemovie.R;
 import com.example.guessthemovie.viewHolder.viewHolder_Carditem1;
 
@@ -30,6 +31,7 @@ import java.util.List;
 public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem1> {
 
     List<pelicula> ListaObjeto;
+    String idDef;
 
     public adaptadorRecycler1(List<pelicula> listaObjeto) {
         ListaObjeto = listaObjeto;
@@ -69,7 +71,7 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
             holder.img3.setImageBitmap(ListaObjeto.get(position).getImagen3());
         }
 
-        String id = ListaObjeto.get(position).getId();
+        idDef = ListaObjeto.get(position).getId().trim().toString();
         String pistas = ListaObjeto.get(position).getlLstPistas();
         String nombre = ListaObjeto.get(position).getlStrNombrePelicula();
 
@@ -77,14 +79,14 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
         holder.img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleClick(v,position,id);
+                handleClick(v,position,idDef);
             }
         });
 
         holder.img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleClick(v,position,id);
+                handleClick(v,position,idDef);
             }
         });
         holder.img3.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +98,8 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Context context = v.getContext();
                     Intent intent = new Intent(context, addPelicula.class);
-                    intent.putExtra("idPelicula_Key", id);
+                    intent.putExtra("cambio",true);
+                    intent.putExtra("idPelicula_Key", idDef);
                     context.startActivity(intent);
 
                 }catch (Exception e){
@@ -130,6 +133,7 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
         Context context = v.getContext();
         Intent intent = new Intent(context, activityJuego.class);
         intent.putExtra("idPelicula_Key", id);
+        intent.putExtra("UID", player.UID);
         context.startActivity(intent);
     }
 

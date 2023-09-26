@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item2"
+        android:title="Cerra sesion"/>
+
+    <item
+        android:id="@+id/itemAgregar"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/baseline_add_task_24"
+        android:title="agregar" />
+
+</menu>

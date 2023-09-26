@@ -49,7 +49,7 @@ public class addPelicula extends AppCompatActivity {
 
     //modo de edicion
     private boolean cambioAModificacion;
-    private String strIdPelicula, strNombre, strPista;
+    private String strIdPelicula, strNombre, strPista,UIDTEMP;
     private Bitmap imgPrime;
 
     private pelicula pa;
@@ -71,11 +71,19 @@ public class addPelicula extends AppCompatActivity {
         pelis = new peliculasDB(this);
         try {
             cambioAModificacion = false;
-            Intent intent = getIntent();
+            Bundle intent = getIntent().getExtras();
             if (intent != null) {
-                strIdPelicula = intent.getStringExtra("idPelicula_Key");
+                if(intent.containsKey("UID")){
+                    UIDTEMP = intent.getString("UID");
+                }else if(intent.containsKey("cambio")){
+                cambioAModificacion = intent.getBoolean("cambio");
+                strIdPelicula = intent.getString("idPelicula_Key");
                 pa = db.getPeliculaPorID(addPelicula.this,strIdPelicula);
+                agregar.setText("Actualizar");
+                txtEncabezado.setText("Actualizar");
                 flashPoint(pa);
+                }
+
             }
         }catch (Exception e){
             Log.d("ErrorAdd",e.getMessage());
@@ -141,6 +149,7 @@ public class addPelicula extends AppCompatActivity {
     public void volver(View view) {
 
         Intent volver = new Intent(this, peliculasGuardadasRecyclerView.class);
+        volver.putExtra("UID",UIDTEMP);
         startActivity(volver);
 
     }
@@ -187,17 +196,14 @@ public class addPelicula extends AppCompatActivity {
             Toast.makeText(addPelicula.this,"Debe darle nombre a la pelicula",Toast.LENGTH_SHORT).show();
         }else {
             DBPeticiones peticiones = new DBPeticiones();
-
-
-
             if(cambioAModificacion){
                 cambioAModificacion = false;
-                peticiones.UpdateMovie(strIdPelicula,nombrePelicula,img1String,"","",pistaCadena,this);
-                startActivity(intent);
+                peticiones.UpdateMovie(strIdPelicula,nombrePelicula,img1String,"","",pistaCadena,addPelicula.this);
             }else{
                 peticiones.insertMovie(nombrePelicula,img1String,"","",pistaCadena,addPelicula.this);
-                startActivity(intent);
             }
+            intent.putExtra("UID",UIDTEMP);
+            startActivity(intent);
 
         }
 

@@ -6,57 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".ActivityConRecycler.peliculasGuardadasRecyclerView">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#E26A4875"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:layout_gravity="left"
+            app:title=""
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/cancelarVolver"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="inicio"
-
-                android:text="CANCELAR"
-                android:textColor="@color/azul_acento"
-                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvEncabezadoVenta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="60sp"
                 android:layout_weight="1"
+                android:layout_marginLeft="10sp"
                 android:text="TUS PELICULAS"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/agregarVentaN"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="AGREGAR"
-                android:onClick="siguienteAgregarPeli"
-                android:textColor="@color/azul_acento"
-                android:textStyle="bold" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/ImgProfilePh"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/noellelogo" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPeliculasGuardadas"
