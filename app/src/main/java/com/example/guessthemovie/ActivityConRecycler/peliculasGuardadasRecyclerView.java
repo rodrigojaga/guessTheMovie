@@ -31,6 +31,7 @@ import com.example.guessthemovie.POO.pelicula;
 import com.example.guessthemovie.POO.player;
 import com.example.guessthemovie.R;
 import com.example.guessthemovie.adaptadorRecyclerView.adaptadorRecycler1;
+import com.example.guessthemovie.multijugador.multi_single_player;
 import com.example.guessthemovie.touchHelper.RecyclerItemTouchHelper;
 import com.example.guessthemovie.viewHolder.viewHolder_Carditem1;
 import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
@@ -138,6 +139,10 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
             finish();
         }else if(item.getItemId() == R.id.itemAgregar){
             Intent volver = new Intent(this, addPelicula.class);
+            volver.putExtra("UID",uid);
+            startActivity(volver);
+        }else if(item.getItemId()==R.id.itemMenuJuego){
+            Intent volver = new Intent(this, multi_single_player.class);
             volver.putExtra("UID",uid);
             startActivity(volver);
         }

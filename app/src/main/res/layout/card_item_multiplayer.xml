@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:backgroundTint="@color/black"
+    android:background="@color/black">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_viewMulti"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/orilla_multi">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/orillaredondarojo">
+
+            <ImageView
+                android:id="@+id/imageViewBorrarMulti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                app:srcCompat="@drawable/baseline_delete_24" />
+
+            <TextView
+                android:id="@+id/textView3Multi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/imageViewBorrarMulti"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text="ELIMINAR" />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutABorrarMulti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:background="@drawable/orilla_multi">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/orilla_multi_dentro"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgViewImg1Multi"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/imagen_orilla_redonda"
+                    android:scaleType="centerCrop"
+                    android:layout_marginHorizontal="20dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+
+
+                <ImageView
+                    android:id="@+id/imgViewImg3Multi"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/imagen_orilla_redonda"
+                    android:scaleType="centerCrop"
+                    android:layout_marginHorizontal="20dp"
+                    tools:srcCompat="@drawable/baseline_update_24" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Puntos Posibles:"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtPuntosDisponibles"
+                        android:text="100"
+                        android:textColor="@color/white"
+                        android:textSize="50sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

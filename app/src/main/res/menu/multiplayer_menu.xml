@@ -2,19 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item2"
+        android:id="@+id/item2Multi"
         android:title="Cerra sesion"/>
 
     <item
-        android:id="@+id/itemAgregar"
+        android:id="@+id/itemAgregarMulti"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/baseline_add_task_24"
+        android:icon="@drawable/baseline_add_circle_outline_24"
         android:title="agregar" />
 
     <item
-        android:id="@+id/itemMenuJuego"
+        android:id="@+id/itemMenuJuegoMulti"
         app:showAsAction="ifRoom"
         android:title="Salir"
         android:icon="@drawable/baseline_keyboard_return_24"/>
-
 </menu>

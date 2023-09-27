@@ -25,6 +25,7 @@ import com.example.guessthemovie.DB.loginDB;
 import com.example.guessthemovie.POO.User;
 import com.example.guessthemovie.POO.player;
 import com.example.guessthemovie.cosasRelacionadasALogin.EncriptacionResult;
+import com.example.guessthemovie.multijugador.multi_single_player;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                                     users.setProfile(user.getPhotoUrl().toString());
                                     String a = user.getUid();
                                     databaseRTDB.getReference().child("Users").child(user.getUid()).setValue(users);
-                                    Intent intent = new Intent(MainActivity.this, peliculasGuardadasRecyclerView.class);
+                                    Intent intent = new Intent(MainActivity.this, multi_single_player.class);
                                     intent.putExtra("UID",user.getUid());
                                     startActivity(intent);
                                 }else{
