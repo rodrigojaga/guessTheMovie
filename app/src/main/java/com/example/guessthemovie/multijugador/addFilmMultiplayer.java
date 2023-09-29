@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.guessthemovie.ActivityConRecycler.addPelicula;
 import com.example.guessthemovie.POO.pelicula2;
 import com.example.guessthemovie.R;
 import com.example.guessthemovie.RealTimeDatabase.daoPelicula;
 import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
+import com.example.guessthemovie.metodosPublicos.varPublicas;
 
 public class addFilmMultiplayer extends AppCompatActivity {
 
@@ -35,6 +37,10 @@ public class addFilmMultiplayer extends AppCompatActivity {
 
     private daoPelicula dao;
 
+    private String UIDTEMP;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,12 @@ public class addFilmMultiplayer extends AppCompatActivity {
         txtTitulo = findViewById(R.id.txtNombrePelicula1);
         txtPista = findViewById(R.id.etPistas1);
         dao = new daoPelicula();
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
+            if(intent.containsKey("UID")){
+                UIDTEMP = intent.getString("UID");
+            }
+        }
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +114,7 @@ public class addFilmMultiplayer extends AppCompatActivity {
         String pistaCadena = "";
         String img1String = comprobacion(img1HasChanged,(Drawable) img.getDrawable());
 
-        //Intent intent21 = new Intent(this, peliculasGuardadasRecyclerView.class);
+        Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
 
         if(cadenaPista.toString()==null || cadenaPista.toString().equals("")){
             cadenaPista.append("");
@@ -116,10 +128,11 @@ public class addFilmMultiplayer extends AppCompatActivity {
         if(nombrePelicula.isEmpty()){
             Toast.makeText(getApplicationContext(),"Debe darle nombre a la pelicula",Toast.LENGTH_SHORT).show();
         }else {
-            pelicula2 peli = new pelicula2("1",nombrePelicula,pistaCadena,img1String);
+            pelicula2 peli = new pelicula2(varPublicas.sigID,nombrePelicula,pistaCadena,img1String);
             dao.addFilm(peli).addOnSuccessListener(suc->{
                 Toast.makeText(getApplicationContext(),"Guardado exitosamente",Toast.LENGTH_SHORT).show();
-                //startActivity(intent21);
+                intent.putExtra("UID",UIDTEMP);
+                startActivity(intent);
             }).addOnFailureListener(er->{
                 Toast.makeText(getApplicationContext(),"Error al guardar",Toast.LENGTH_SHORT).show();
             });
@@ -137,4 +150,9 @@ public class addFilmMultiplayer extends AppCompatActivity {
         return null;
     }
 
+    public void volver(View view) {
+        Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
+        intent.putExtra("UID",UIDTEMP);
+        startActivity(intent);
+    }
 }

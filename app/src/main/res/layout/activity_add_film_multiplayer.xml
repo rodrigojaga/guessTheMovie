@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="volver"
-
             android:text="CANCELAR"
             android:textColor="@color/azul_acento"
             android:textStyle="bold" />

@@ -3,6 +3,7 @@ package com.example.guessthemovie.POO;
 public class player {
 
     private String idPlayer, profile, name;
+
     public static String UID;
 
     public player(String idPlayer, String profile, String name) {

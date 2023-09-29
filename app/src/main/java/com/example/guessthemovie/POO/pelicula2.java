@@ -7,6 +7,7 @@ public class pelicula2 {
     private String pistas;
     private String img;
 
+
     public pelicula2(String id, String filmName, String pistas, String img) {
         this.id = id;
         this.filmName = filmName;

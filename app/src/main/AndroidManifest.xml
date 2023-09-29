@@ -24,6 +24,9 @@
         android:theme="@style/Theme.GuessTheMovie"
         tools:targetApi="31">
         <activity
+            android:name=".multijugador.juegoMultiplayer"
+            android:exported="false" />
+        <activity
             android:name=".multijugador.addFilmMultiplayer"
             android:exported="false" />
         <activity

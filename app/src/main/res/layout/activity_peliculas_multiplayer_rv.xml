@@ -17,7 +17,7 @@
             android:id="@+id/toolbarMulti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gris_oscuro"
+            android:background="@color/gris_medio"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             android:layout_gravity="left"
