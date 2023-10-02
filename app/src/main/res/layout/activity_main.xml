@@ -18,6 +18,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="GUESS THE MOVIE"
+
         android:textColor="#FF5722"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -75,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746" />
+        app:layout_constraintVertical_bias="0.707" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -89,21 +90,59 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.165" />
 
-    <Button
-        android:id="@+id/creacion"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="O INICIA SESIÓN CON GOOGLE"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="italic"
+        android:gravity="center"
+        android:background="@drawable/google_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.943">
+
+        <Button
+            android:id="@+id/creacion"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/google_button"
+            android:text="INICIA SESIÓN CON GOOGLE"
+            android:textColor="#fff"
+            android:textSize="19sp"
+            android:textStyle="italic"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="20sp"
+            android:src="@drawable/_00221"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ó"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.822" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

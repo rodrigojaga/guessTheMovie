@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="volver"
+            android:onClick="volverMP"
             android:text="CANCELAR"
             android:textColor="@color/azul_acento"
             android:textStyle="bold" />
@@ -76,7 +76,7 @@
         android:id="@+id/etPistas1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="484dp"
+        android:layout_marginTop="400dp"
         android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="Pistas"
@@ -110,7 +110,7 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="572dp"
+        android:layout_marginTop="500dp"
         android:drawableLeft="@drawable/baseline_format_list_numbered_rtl_24"
         android:onClick="armarPistaMulti"
         android:text="Agregar Otra Pista"
@@ -119,6 +119,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
         app:layout_constraintVertical_bias="0.107" />
+
+    <Button
+        android:id="@+id/creacion"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:text="No tienes ideas? Mira Sugerencias!"
+        android:textColor="@color/white"
+        android:onClick="verSugerencias"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.807" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

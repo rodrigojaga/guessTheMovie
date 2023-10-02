@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
                 KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
                 keyGenerator.init(keyGenParameterSpec);
-                Toast.makeText(MainActivity.this,"La llave se genero",Toast.LENGTH_SHORT).show();
+
                 return keyGenerator.generateKey();
             }else{
 

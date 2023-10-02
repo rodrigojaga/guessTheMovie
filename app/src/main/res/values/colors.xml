@@ -31,4 +31,7 @@
     <color name="moradoOscuro">#725A7A</color>
     <color name="moradoPalido">#C56C86</color>
     <color name="Fosforo">#FF7582</color>
+    <color name="colorPrimary">#4285F4</color> <!-- Color principal (azul) -->
+    <color name="colorPrimaryDark">#0D47A1</color> <!-- Color secundario (azul oscuro) -->
+    <color name="colorAccent">#FF5722</color> <!-- Color de acento (naranja) -->
 </resources>

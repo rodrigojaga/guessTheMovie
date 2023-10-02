@@ -57,10 +57,6 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
 
     private Handler h = new Handler();
 
-    private peliculasDB pelis;
-    private SQLiteDatabase database;
-    private pelicula pa;
-
     private boolean isActive = false,btnPressed = false;
     private int i= 0;
     private int a=0,b=0,c=0;
@@ -91,11 +87,11 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                 llenado(id);
 
             }
-            Toast.makeText(getApplicationContext(),id,Toast.LENGTH_SHORT).show();
+
         }catch (Exception e){
             Log.d("ErrorAdd",e.getMessage());
         }
-//
+
         try {
             for (int i1 = 0; i1 < 3; i1++) {
                 numerosDisponibles.add(i1);

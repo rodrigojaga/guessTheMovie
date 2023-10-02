@@ -207,25 +207,6 @@ public class addPelicula extends AppCompatActivity {
 
         }
 
-//        Intent intent = new Intent(this, principal.class);
-//
-//        if (!nombreProductoString.isEmpty() && !cantidadProductoString.isEmpty() && !precioProductoString.isEmpty()) {
-//            Drawable drawable1 = imagenProducto.getDrawable();
-//            Bitmap bm = ((BitmapDrawable) drawable1).getBitmap();
-//            String imgN = bitmapToBase64(bm);
-//            DBpeticiones dBpeticiones = new DBpeticiones();
-//            if(cambioAModificacion){
-//                cambioAModificacion = false;
-//                dBpeticiones.UpdateTask(strIdProducto,nombreProductoString,precioProductoString,cantidadProductoString,imgN,this);
-//                startActivity(intent);
-//            }else{
-//                dBpeticiones.insertProductos(nombreProductoString,precioProductoString,cantidadProductoString,imgN,nuevoProducto.this);
-//                startActivity(intent);
-//            }
-//        } else {
-//            Toast.makeText(nuevoProducto.this, "No se ingreso", Toast.LENGTH_SHORT).show();
-//        }
-
 
     }
 

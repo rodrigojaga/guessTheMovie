@@ -52,7 +52,7 @@ public class adaptadorRecyclerViewMulti extends RecyclerView.Adapter<viewHolder_
         holder.imgMulti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Prueba",Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(context.getApplicationContext(), juegoMultiplayer.class);
                 intent.putExtra("UID",player.UID);
                 intent.putExtra("Film",peli.getFilmName());
@@ -64,7 +64,7 @@ public class adaptadorRecyclerViewMulti extends RecyclerView.Adapter<viewHolder_
         holder.img2Multi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Prueba",Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(context.getApplicationContext(), juegoMultiplayer.class);
                 intent.putExtra("UID",player.UID);
                 intent.putExtra("Film",peli.getFilmName());

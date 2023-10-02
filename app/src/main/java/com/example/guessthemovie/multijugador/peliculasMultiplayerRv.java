@@ -11,17 +11,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.guessthemovie.ActivityConRecycler.addPelicula;
 import com.example.guessthemovie.MainActivity;
+import com.example.guessthemovie.POO.Movie;
 import com.example.guessthemovie.POO.pelicula2;
 import com.example.guessthemovie.POO.player;
 import com.example.guessthemovie.adaptadorRecyclerView.adaptadorRecyclerViewMulti;
 import com.example.guessthemovie.RealTimeDatabase.daoPelicula;
 import com.example.guessthemovie.R;
+import com.example.guessthemovie.apiConsumo.MyApiClient;
 import com.example.guessthemovie.metodosPublicos.varPublicas;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -74,13 +76,17 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
                 player.UID = uid;
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference userReference = databaseReference.child("Users").child(intent.getString("UID"));
-                Task<DataSnapshot> user = userReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                    @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
-                        player user = dataSnapshot.getValue(player.class);
-                        Picasso.get().load(user.getProfile()).into(imgPhoto);
-                    }
-                });
+                try {
+                    Task<DataSnapshot> user = userReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                        @Override
+                        public void onSuccess(DataSnapshot dataSnapshot) {
+                            player user = dataSnapshot.getValue(player.class);
+                            Picasso.get().load(user.getProfile()).into(imgPhoto);
+                        }
+                    });
+                }catch (Exception Ignored){
+
+                }
 
             }
         }catch(Exception e){
@@ -135,6 +141,7 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else if(item.getItemId() == R.id.itemAgregarMulti){
+            datos();
             Intent volver = new Intent(this, addFilmMultiplayer.class);
             volver.putExtra("UID",uid);
             startActivity(volver);
@@ -147,4 +154,21 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     //Fin toolbar
+
+    private void datos(){
+
+        MyApiClient.makeApiRequest(this, new MyApiClient.MyApiCallback<Movie>() {
+            @Override
+            public void onSuccess(Movie response) {
+                // Procesa la respuesta exitosa aquí
+                Toast.makeText(getApplicationContext(), "Llegada 1", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
