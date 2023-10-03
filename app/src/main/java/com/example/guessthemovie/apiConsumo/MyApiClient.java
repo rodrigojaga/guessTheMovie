@@ -77,7 +77,7 @@ public class MyApiClient {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("accept", "application/json");
-                headers.put("Authorization", "Bearer " + API_KEY); // Agrega el token de autenticación
+                headers.put("Authorization", "Bearer " + API_KEY);
                 return headers;
             }
         };
