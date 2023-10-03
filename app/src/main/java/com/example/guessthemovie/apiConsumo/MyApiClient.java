@@ -39,12 +39,12 @@ public class MyApiClient {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Aquí puedes procesar la respuesta JSON utilizando Gson
+                        
                         try {
-                            // Procesa la respuesta JSON como sea necesario
+                            
                             JSONArray resultsArray = response.getJSONArray("results");
 
-                            // Itera a través de los elementos en el array "results"
+                            
                             for (int i = 0; i < resultsArray.length(); i++) {
                                 JSONObject movieObject = resultsArray.getJSONObject(i);
 
