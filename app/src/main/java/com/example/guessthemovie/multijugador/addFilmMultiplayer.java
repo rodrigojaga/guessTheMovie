@@ -37,7 +37,7 @@ public class addFilmMultiplayer extends AppCompatActivity {
 
     private daoPelicula dao;
 
-    private String UIDTEMP;
+    private String UIDTEMP,NAMETEMP;
 
 
 
@@ -58,6 +58,7 @@ public class addFilmMultiplayer extends AppCompatActivity {
             if (intent != null) {
                 if (intent.containsKey("UID")) {
                     UIDTEMP = intent.getString("UID");
+                    NAMETEMP = intent.getString("NAME");
                     if (intent.containsKey("path")) {
                         Picasso.get().load("https://image.tmdb.org/t/p/w500" + intent.getString("path")).into(img);
                         txtTitulo.setText(intent.getString("title"));

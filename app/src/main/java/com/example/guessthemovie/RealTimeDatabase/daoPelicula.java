@@ -22,22 +22,6 @@ public class daoPelicula {
         return databaseReference.push().setValue(peli2);
     }
 
-//    public Task<Void> update(String key, HashMap<String, Object> hashMap){
-//        return databaseReference.child(key).updateChildren(hashMap);
-//    }
-
-//    public Task<Void> delete (String key){
-//        return databaseReference.child(key).removeValue();
-//    }
-//
-//    public Query getFilms(String key){
-//        if(key.equals("")){
-//            return databaseReference.orderByKey().limitToFirst(8);
-//        }else{
-//            return databaseReference.orderByKey().startAfter(key).limitToFirst(8);
-//        }
-//
-//    }
     public Query getFilms(){
         return databaseReference.orderByKey();
     }

@@ -5,6 +5,7 @@ public class player {
     private String idPlayer, profile, name;
 
     public static String UID;
+    public static String NAME;
 
     public player(String idPlayer, String profile, String name) {
         this.idPlayer = idPlayer;

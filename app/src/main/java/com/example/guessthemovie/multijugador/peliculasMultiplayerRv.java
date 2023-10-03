@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 
 public class peliculasMultiplayerRv extends AppCompatActivity {
 
-    private String uid;
+    private String uid,name;
 
     //Componentes
     private ImageView imgPhoto;
@@ -74,6 +75,7 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
 
                 uid = intent.getString("UID");
                 player.UID = uid;
+
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference userReference = databaseReference.child("Users").child(intent.getString("UID"));
                 try {
@@ -82,6 +84,9 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
                         public void onSuccess(DataSnapshot dataSnapshot) {
                             player user = dataSnapshot.getValue(player.class);
                             Picasso.get().load(user.getProfile()).into(imgPhoto);
+                            name = user.getName();
+                            player.NAME = user.getName();
+
                         }
                     });
                 }catch (Exception Ignored){
@@ -89,6 +94,13 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
                 }
 
             }
+
+            imgPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }catch(Exception e){
             Log.d("Error",e.getMessage());
         }
@@ -144,10 +156,12 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
             datos();
             Intent volver = new Intent(this, addFilmMultiplayer.class);
             volver.putExtra("UID",uid);
+            volver.putExtra("NAME",name);
             startActivity(volver);
         }else if(item.getItemId()==R.id.itemMenuJuegoMulti){
             Intent volver = new Intent(this, multi_single_player.class);
             volver.putExtra("UID",uid);
+            volver.putExtra("NAME",name);
             startActivity(volver);
         }
 

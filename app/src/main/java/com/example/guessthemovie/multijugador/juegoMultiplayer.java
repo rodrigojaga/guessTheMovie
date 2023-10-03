@@ -21,6 +21,9 @@ import com.example.guessthemovie.DB.DBPeticiones;
 import com.example.guessthemovie.DB.peliculasDB;
 import com.example.guessthemovie.POO.pelicula;
 import com.example.guessthemovie.POO.pelicula2;
+import com.example.guessthemovie.POO.player;
+import com.example.guessthemovie.POO.puntaje;
+import com.example.guessthemovie.RealTimeDatabase.daoPuntaje;
 import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
 import com.example.guessthemovie.R;
 import com.github.javafaker.Faker;
@@ -61,6 +64,8 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
     private int i= 0;
     private int a=0,b=0,c=0;
 
+    private daoPuntaje dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +83,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         b = R.id.peli2Multi;
         btn3 = findViewById(R.id.peli3Multi);
         c = R.id.peli3Multi;
-
+        dao = new daoPuntaje();
         try {
             Bundle intent = getIntent().getExtras();
             if (intent != null) {
@@ -135,6 +140,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                 }else{
                     Toast.makeText(getApplicationContext(),"No se encontro",Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
@@ -277,6 +283,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
                 i=0;
                 btnPressed = true;
+                dao.addOrUpdateScore(new puntaje(player.NAME,"100"));
                 intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
@@ -289,6 +296,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
                 i=0;
                 btnPressed = true;
+                dao.addOrUpdateScore(new puntaje(player.NAME,"100"));
                 intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
@@ -301,6 +309,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
                 i=0;
                 btnPressed = true;
+                dao.addOrUpdateScore(new puntaje(player.NAME,"100"));
                 intent.putExtra("UID",uidtemp);
                 startActivity(intent);
                 finish();
@@ -309,5 +318,9 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+
+
+
+
 
 }
