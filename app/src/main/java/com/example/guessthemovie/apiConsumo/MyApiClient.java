@@ -39,21 +39,17 @@ public class MyApiClient {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Aquí puedes procesar la respuesta JSON utilizando Gson
+
                         try {
-                            // Procesa la respuesta JSON como sea necesario
+
                             JSONArray resultsArray = response.getJSONArray("results");
 
-                            // Itera a través de los elementos en el array "results"
                             for (int i = 0; i < resultsArray.length(); i++) {
                                 JSONObject movieObject = resultsArray.getJSONObject(i);
 
                                 Movie movie = new Movie(movieObject.getInt("id"),movieObject.getString("overview"),
                                         movieObject.getString("poster_path"),movieObject.getString("release_date"),
                                         movieObject.getString("title"));
-
-                                // Agrega la película a la lista
-                                //Toast.makeText(context.getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
                                 try {
                                     ListaYMetodoDeLlenado.pelicula(movie);
                                     movies.add(movie);
@@ -77,7 +73,7 @@ public class MyApiClient {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("accept", "application/json");
-                headers.put("Authorization", "Bearer " + API_KEY); // Agrega el token de autenticación
+                headers.put("Authorization", "Bearer " + API_KEY);
                 return headers;
             }
         };
