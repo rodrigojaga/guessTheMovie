@@ -1,5 +1,7 @@
 package com.example.guessthemovie.RealTimeDatabase;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.example.guessthemovie.POO.pelicula2;
@@ -11,6 +13,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class daoPuntaje {
 
@@ -47,34 +54,8 @@ public class daoPuntaje {
         return null;
     }
 
-
-//    public Task<Void> addScore(puntaje score) {
-//        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child(puntaje.class.getSimpleName());
-//        DatabaseReference scoreReference = databaseReference1.child(score.getNombre());
-//
-//        // Verificar si el nodo con el nombre ya existe en la base de datos
-//        scoreReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    // El puntaje con el mismo nombre ya existe en la base de datos, puedes manejar esto si es necesario
-//                } else {
-//                    // El puntaje no existe, entonces lo agregamos
-//                    DatabaseReference newScoreReference = databaseReference1.push();
-//                    newScoreReference.setValue(score);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                // Maneja errores si es necesario
-//            }
-//        });
-//        return null;
-//    }
-//
-//    public Query getFilms(){
-//        return databaseReference.orderByKey();
-//    }
+    public Query getScore(){
+        return databaseReference.orderByChild("puntaje").limitToFirst(3);
+    }
 
 }

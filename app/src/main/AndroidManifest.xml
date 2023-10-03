@@ -24,6 +24,9 @@
         android:theme="@style/Theme.GuessTheMovie"
         tools:targetApi="31">
         <activity
+            android:name=".multijugador.top3"
+            android:exported="false" />
+        <activity
             android:name=".multijugador.sugerenciaRvActivity"
             android:exported="false" />
         <activity

@@ -98,7 +98,9 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
             imgPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent3 = new Intent(getApplicationContext(), top3.class);
+                    intent3.putExtra("UID",uid);
+                    startActivity(intent3);
                 }
             });
         }catch(Exception e){
