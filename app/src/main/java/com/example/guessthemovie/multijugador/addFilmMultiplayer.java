@@ -24,19 +24,21 @@ import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
 import com.example.guessthemovie.metodosPublicos.varPublicas;
 import com.squareup.picasso.Picasso;
 
+/**
+ * Clase de la Activity para agregar peliculas en el modo multijugador
+ * Esta clase guarda las peliculas en Firebase RealTime Database
+ */
 public class addFilmMultiplayer extends AppCompatActivity {
-
+//Componentes de la interfaz visual
     private Button btnAgregar;
     private ImageView img;
     private TextView txtTitulo,txtPista;
 
+//variables globales
     private boolean img1HasChanged = false;
     private Uri pathimg1;
-
     private StringBuilder cadenaPista;
-
     private daoPelicula dao;
-
     private String UIDTEMP,NAMETEMP;
 
 
@@ -46,13 +48,15 @@ public class addFilmMultiplayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_film_multiplayer);
-
+        //declaracion de componentes
         cadenaPista = new StringBuilder();
         btnAgregar = findViewById(R.id.agregarPelicula1);
         img = findViewById(R.id.imagen11);
         txtTitulo = findViewById(R.id.txtNombrePelicula1);
         txtPista = findViewById(R.id.etPistas1);
         dao = new daoPelicula();
+
+        //Revisa si el Intent que llama a esta Activity contiene algo
         Bundle intent = getIntent().getExtras();
         try {
             if (intent != null) {
@@ -83,16 +87,34 @@ public class addFilmMultiplayer extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Comienza el proceso de seleccion de imagenes
+     * @param view
+     */
     public void selectImageForImageView4(View view) {
         cargarImagen(1);
     }
 
+    /**
+     * Permite selccionar una imagen de la galeria
+     * @param imageViewID
+     */
     private void cargarImagen(int imageViewID) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent.createChooser(intent,"Seleccione una aplicacion"),imageViewID);
     }
 
+    /**
+     * Permite establecer en un ImageView la imagen seleccionada por el usuario desde su galeria
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     *
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,6 +128,10 @@ public class addFilmMultiplayer extends AppCompatActivity {
         }
     }
 
+    /**
+     * Arma las pistas ingresadas por el usuario, separandolas mediante el caracter |
+     * @param view
+     */
     public void armarPistaMulti(View view) {
 
         try{
@@ -124,6 +150,9 @@ public class addFilmMultiplayer extends AppCompatActivity {
 
     }
 
+    /**
+     * Obtiene los datos de los campos respectivos para crear una nueva pelicula en Firebase
+     */
     private void obtenerDatos(){
         try {
             String nombrePelicula = txtTitulo.getText().toString().trim();
@@ -159,6 +188,14 @@ public class addFilmMultiplayer extends AppCompatActivity {
         }
     }
 
+    /**
+     * comprueba si se ingreso una imagen
+     * si se ingreso, se transforma a String
+     * en caso de que no retorna null
+     * @param comprobar
+     * @param drawable
+     * @return String
+     */
     private String comprobacion(boolean comprobar, Drawable drawable){
         if(comprobar){
             Bitmap bm = ((BitmapDrawable) drawable).getBitmap();
@@ -167,12 +204,20 @@ public class addFilmMultiplayer extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Vuelve a la vista peliculasMultiplayerRv
+     * @param view
+     */
     public void volverMP(View view) {
         Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
         intent.putExtra("UID",UIDTEMP);
         startActivity(intent);
     }
 
+    /**
+     * Lleva a la vista de sugerencias de peliculas
+     * @param view
+     */
     public void verSugerencias(View view) {
         //datos();
         Intent intent = new Intent(getApplicationContext(), sugerenciaRvActivity.class);

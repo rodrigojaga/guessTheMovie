@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guessthemovie.R;
 
+/**
+ * Clase que se emplea como modelo para mostrar los datos en el recyclerView de peliculasGuardadasRv
+ */
 public class viewHolder_Carditem1 extends RecyclerView.ViewHolder {
 
     public ImageView img1;

@@ -41,19 +41,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Activity de juego
+ */
 public class juegoMultiplayer extends AppCompatActivity implements View.OnClickListener{
+    //Variables utiles para asignacion de titulos a botones de forma aleatoria
     private List<Integer> numerosDisponibles;
     private Random random;
 
     private List<Integer> numerosDisponiblesS;
     private Random randomS;
+//FIN
 
-
+//Variables de componentes de la aplicacion
     private ProgressBar p;
     private TextView txt,txt2,porcentaje;
     private ImageView img;
     private Button btn1,btn2,btn3;
+//Fin
 
+//variables Globales
     private String id="",nombrePeli="",uidtemp="";
 
     private static String nombreFilm;
@@ -65,6 +72,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
     private int a=0,b=0,c=0;
 
     private daoPuntaje dao;
+//FIN
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_juego_multiplayer);
 
         numerosDisponibles = new ArrayList<>();
+        //Asignacion de valores a los componentes de la interfaz
         txt = findViewById(R.id.textViewJuegoMulti);
         txt2 = findViewById(R.id.textView2JuegoMulti);
         img = findViewById(R.id.imageViewJuegoMulti);
@@ -83,7 +92,12 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         b = R.id.peli2Multi;
         btn3 = findViewById(R.id.peli3Multi);
         c = R.id.peli3Multi;
+        //FIN
+
+        //instancia de la clase que se conecta con la base de datos de Firebase
         dao = new daoPuntaje();
+
+        //revisa si el Intent que llamo a este Activity contiene algo
         try {
             Bundle intent = getIntent().getExtras();
             if (intent != null) {
@@ -96,7 +110,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         }catch (Exception e){
             Log.d("ErrorAdd",e.getMessage());
         }
-
+//Llena los ArrayList con numeros del 0 al 3 para luego asignar nombres randoms a los Botones
         try {
             for (int i1 = 0; i1 < 3; i1++) {
                 numerosDisponibles.add(i1);
@@ -112,16 +126,20 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         }catch(Exception e){
             Log.d("aleatorio",e.getMessage());
         }
-
+//onCLickListeners de los botones que contienen las opciones de respuestas en el juego
         btn1.setOnClickListener(this);
 
         btn2.setOnClickListener(this);
 
         btn3.setOnClickListener(this);
-
+//Llamada del metodo relacionado al progressBar
         barra(true);
     }
-//
+
+    /**
+     * Si el intent contenia algo, tomaba los datos y los en la base de datos de Firebase para luego
+     * @param idTemp
+     */
     private void llenado(String idTemp){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("pelicula2");
@@ -130,6 +148,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
+                    //Si los datos existe, los trae de la base de datos de Firebase y los pone donde corresponde
                     for (DataSnapshot data : snapshot.getChildren()) {
                         pelicula2 peli = data.getValue(pelicula2.class);
                         nombreFilm = peli.getFilmName();
@@ -151,10 +170,17 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
     }
 //
 //
-//
+
+    /**
+     * Metodo que Activa el contador y el progressBar que mide el timpo que le queda al usuario
+     * para completar el juego.
+     * En caso de perder, saldra el mensaje de que el usuario Perdio
+     * @param var sirve para activar este metodo
+     */
     private void barra(boolean var) {
         if (var) {
             if (!isActive) {
+                //Inicia un nuevo proceso paralelo en el hilo principal de la aplicacion
                 Thread hilo = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -171,7 +197,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                             try {
-                                Thread.sleep(100);
+                                Thread.sleep(100);//hace esperar al hilo
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -196,18 +222,25 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
-                hilo.start();
+                hilo.start();//comienza el hilo
             }
         }
     }
-
+    /**
+     * Este metodo toma los 3 botones de la interfaz y los mete en un ArrayList, para luego asignarle un
+     * nombre de pelicula aleatoria
+     */
     private void asignarNombre(){
-
+//Mete los botones en el ArrayList
         List<Integer> botones = new ArrayList<>();
         botones.add(0,R.id.peli1Multi);
         botones.add(1,R.id.peli2Multi);
         botones.add(2,R.id.peli3Multi);
 
+        /*
+        Utiliza la dependencia de DataFaker para obtener nombre de Harry Potter y de libros aleatorios
+        En uno de estos botones estara el nombre correcto de la pelicula
+        */
         Faker f = new Faker();
         List<String> peli = new ArrayList<>();
         peli.add(0,id);
@@ -216,13 +249,23 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
 
 
         int mm =0;
-
+//Obtiene un numero aleatorio entre 0 y 2 de las listas que llenamos al principio del Activity
         for (int i3 = 0; i3 < 3; i3++) {
             mm = obtenerNumeroAleatorioUnico();
 
-            if (mm >= 0) {
+            if (mm >= 0) {//Busca el id del boton que corresponde a la posicion del numero obtenido anteriormente
                 botones.get(mm);
-                if(R.id.peli1Multi==botones.get(mm)){
+                if(R.id.peli1Multi==botones.get(mm)){//si el id corresponde al boton 1, toma ese boton
+                    int numero=0;
+                    //Toma otro numero aleatorio entre el 0 y 2 para tomar un nombre aleatorio de la lista peli
+                    for (int j = 0; j < 3; j++) {
+                        numero = obtenerNumeroAleatorioUnicoS();
+                        if (numero >= 0) {
+                            break;
+                        }
+                    }
+                    btn1.setText(peli.get(numero));//Asigna al boton 1 el nombre de la pelicula, Personaje de Harry Potter o nombre del libro
+                }else if(R.id.peli2Multi==botones.get(mm)){//si el id obtenido es del boton 2 asigna a este el nombre aleatorio
                     int numero=0;
                     for (int j = 0; j < 3; j++) {
                         numero = obtenerNumeroAleatorioUnicoS();
@@ -230,8 +273,8 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                             break;
                         }
                     }
-                    btn1.setText(peli.get(numero));
-                }else if(R.id.peli2Multi==botones.get(mm)){
+                    btn2.setText(peli.get(numero));//Asigna al boton 1 el nombre de la pelicula, Personaje de Harry Potter o nombre del libro
+                }else if(R.id.peli3Multi==botones.get(mm)){//si el id obtenido es del boton 2 asigna a este el nombre aleatorio
                     int numero=0;
                     for (int j = 0; j < 3; j++) {
                         numero = obtenerNumeroAleatorioUnicoS();
@@ -239,16 +282,7 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
                             break;
                         }
                     }
-                    btn2.setText(peli.get(numero));
-                }else if(R.id.peli3Multi==botones.get(mm)){
-                    int numero=0;
-                    for (int j = 0; j < 3; j++) {
-                        numero = obtenerNumeroAleatorioUnicoS();
-                        if (numero >= 0) {
-                            break;
-                        }
-                    }
-                    btn3.setText(peli.get(numero));
+                    btn3.setText(peli.get(numero));//Asigna al boton 1 el nombre de la pelicula, Personaje de Harry Potter o nombre del libro
                 }
             }
         }
@@ -257,6 +291,12 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
     }
 
 
+    /**
+     * Obtiene un numero aleatorio del ArrayList numerosDisponibles
+     * Este metodo se usa en el for para tomar el id de un boton al azar
+     * @return int
+     *
+     */
     private int obtenerNumeroAleatorioUnico() {
 
         int indiceAleatorio = random.nextInt(numerosDisponibles.size());
@@ -266,6 +306,12 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         return numeroAleatorio;
     }
 
+    /**
+     * Obtiene un numero aleatorio del ArrayList numerosDisponiblesS
+     * Este metodo se usa en el for para tomar un texto al azar
+     * @return int
+     *
+     */
     private int obtenerNumeroAleatorioUnicoS() {
         int indiceAleatorio = randomS.nextInt(numerosDisponiblesS.size());
         int numeroAleatorio = numerosDisponiblesS.get(indiceAleatorio);
@@ -274,7 +320,12 @@ public class juegoMultiplayer extends AppCompatActivity implements View.OnClickL
         return numeroAleatorio;
     }
 
-
+    /**
+     * Identifica que boton fue presionado, asi como tambien hace los procesos en caso de que
+     * se haya presionado el boton correcto para ganar
+     * Devuelve al activity anterior y suma puntos al usuario que respondio bien
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.peli1Multi){

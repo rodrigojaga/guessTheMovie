@@ -51,30 +51,28 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
+/**
+ * Clase principal Log-in
+ */
 public class MainActivity extends AppCompatActivity {
-
+//Componentes
     TextView txt;
     EditText usuario, contrasena;
     Button entrar,creacion;
-
+//Firebase
     private GoogleSignInClient client;
     FirebaseAuth auth;
     FirebaseDatabase databaseRTDB;
-
+//Encriptacion
     private static final String KEY_ALIAS ="my_key_alias12";
-
-
     static byte[] contrasenaEnByteCom, usuarioEnByteCom;
     static byte[] usuarioDB, contrasenaDB;
     String datosEncrip,usuarioEncrip;
-
     static Key aesKey;
-
     String combinado;
     EncriptacionResult erCon,erUsu,erUsuario,erContrasena;
-
     static int contador;
-
+    //login local
     private loginDB loginDB;
     private SQLiteDatabase database;
 
@@ -82,15 +80,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Inicializacion de componentes
         txt = findViewById(R.id.welcome);
         usuario = findViewById(R.id.usuario);
         contrasena = findViewById(R.id.contrasena);
+        //poner animaciones a los componentes
         Animation animacion = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         entrar = findViewById(R.id.entrar);
         creacion = findViewById(R.id.creacion);
         Animation animacionBtn = AnimationUtils.loadAnimation(this,R.anim.fade_in_button);
-
-
         txt.startAnimation(animacion);
         usuario.startAnimation(animacion);
         contrasena.startAnimation(animacion);
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
-
+//metodos de google
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -117,36 +115,7 @@ public class MainActivity extends AppCompatActivity {
         creacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String val = contrasena.getText().toString().trim();
-//                String val1 = usuario.getText().toString().trim();
-//                User user = new User();
-//                boolean validada = user.validarContrsena(val);
-//                if(validada){
-//                    contrasena.setText("");
-//                    usuario.setText("");
-//
-//                    try {
-//
-//                        datosEncrip = sha256(val);
-//                        usuarioEncrip = sha256(val1);
-//
-//                        byte[] datosEncriptarBytes = datosEncrip.getBytes(StandardCharsets.UTF_8);
-//                        byte[] usuEncriptarBytes = usuarioEncrip.getBytes(StandardCharsets.UTF_8);
-//
-//                        erCon = encriptarDatos(aesKey,datosEncriptarBytes);
-//                        erUsu = encriptarDatos(aesKey,usuEncriptarBytes);
-//
-//                        newUser(erUsu.getDatosEncriptados(), erUsu.getIv(), erCon.getDatosEncriptados(), erCon.getIv());
-//
-//                        Toast.makeText(MainActivity.this,"Info encriptada",Toast.LENGTH_SHORT).show();
-//                    } catch (Exception ignored) {
-//                        Log.d("cosa",ignored.toString());
-//                    }
-//
-//                }else{
-//                    Toast.makeText(MainActivity.this,"La contraseña debe contener Mayusculas, minusculas, Numeros, Caracteres especiales",Toast.LENGTH_SHORT).show();
-//
-//                }
+
 
                 Intent intent = client.getSignInIntent();
                 startActivityForResult(intent,1234);
@@ -156,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
                 try {
 
                     //buscar los datos mediante emparejado
@@ -204,6 +177,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Guarda el usuario recibido en el inicio de sesion de google y lo envia a la base de datos en Firebase
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     *
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -240,6 +224,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Genera una llave de encriptacion
+     * @return
+     */
     private Key generarLave(){
         try{
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
@@ -269,6 +257,11 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Encripta en 2hs256 lo pasado por los parametros
+     * @param contrasena
+     * @return
+     */
     private String sha256(String contrasena){
         try{
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
@@ -283,6 +276,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Encripta los datos y los almacena
+     * @param clave
+     * @param datos
+     * @return
+     * @throws Exception
+     */
     private EncriptacionResult encriptarDatos(Key clave, byte[] datos) throws Exception{
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
@@ -305,6 +305,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * crea un nuevo usuario en la base de datos local
+     * @param usuarioE
+     * @param usuarioIV
+     * @param contrasena
+     * @param contrasenaIV
+     */
     private void newUser(byte[] usuarioE,byte[] usuarioIV, byte[] contrasena,byte[] contrasenaIV){
         ContentValues values = new ContentValues();
         values.put(loginDB.ColumnUsu,usuarioE);
@@ -314,6 +321,9 @@ public class MainActivity extends AppCompatActivity {
         database.insert(loginDB.TableName,null,values);
     }
 
+    /**
+     * busca el usuario ingresado en la base de datos local
+     */
     private void readUser(){
         try {
             String[] projection = {loginDB.ColumnUsu, loginDB.ColumnUsuIV, loginDB.ColumnPass, loginDB.ColumnPassIV};
@@ -342,6 +352,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Desencripta los datos para poder compararlos
+     * @param clave
+     * @param encriptacionResult
+     * @return
+     */
     public byte[] desencriptarDatos(Key clave, EncriptacionResult encriptacionResult) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
@@ -354,8 +370,46 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * LLeva a la Activity peliculasGuardadasRecyclerView
+     * @param view
+     */
     public void siguiente(View view){
-        Intent volver = new Intent(this, peliculasGuardadasRecyclerView.class);
+        Intent volver = new Intent(this, multi_single_player.class);
         startActivity(volver);
+    }
+
+    public void Unirse(View view) {
+
+                        String val = contrasena.getText().toString().trim();
+                String val1 = usuario.getText().toString().trim();
+                User user = new User();
+                boolean validada = user.validarContrsena(val);
+                if(validada){
+                    contrasena.setText("");
+                    usuario.setText("");
+
+                    try {
+
+                        datosEncrip = sha256(val);
+                        usuarioEncrip = sha256(val1);
+
+                        byte[] datosEncriptarBytes = datosEncrip.getBytes(StandardCharsets.UTF_8);
+                        byte[] usuEncriptarBytes = usuarioEncrip.getBytes(StandardCharsets.UTF_8);
+
+                        erCon = encriptarDatos(aesKey,datosEncriptarBytes);
+                        erUsu = encriptarDatos(aesKey,usuEncriptarBytes);
+
+                        newUser(erUsu.getDatosEncriptados(), erUsu.getIv(), erCon.getDatosEncriptados(), erCon.getIv());
+
+                        Toast.makeText(MainActivity.this,"Has Sido Registrado",Toast.LENGTH_SHORT).show();
+                    } catch (Exception ignored) {
+                        Log.d("cosa",ignored.toString());
+                    }
+
+                }else{
+                    Toast.makeText(MainActivity.this,"La contraseña debe contener Mayusculas, minusculas, Numeros, Caracteres especiales",Toast.LENGTH_SHORT).show();
+
+                }
     }
 }

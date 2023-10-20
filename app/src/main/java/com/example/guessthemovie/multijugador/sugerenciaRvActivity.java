@@ -15,19 +15,25 @@ import com.example.guessthemovie.metodosPublicos.ListaYMetodoDeLlenado;
 
 import java.util.ArrayList;
 
+/**
+ * Activity donde estan listadas las peliculas obtenidas de la API
+ */
 public class sugerenciaRvActivity extends AppCompatActivity {
-
+    //variable global
     private String UIDTEMP;
+    ArrayList<Movie> listarPelicula = new ArrayList<>();
 
+    //componentes de la Interfaz grafica
     private RecyclerView rv;
     private LinearLayoutManager layoutManager;
     private adaptadorRecyclerViewSugerencia adaptador;
-    ArrayList<Movie> listarPelicula = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugerencia_rv);
+        //Metodos relaxcionados a la implementacion del RecyclerView
         rv = findViewById(R.id.rvSugerencia);
 
         try{
@@ -38,7 +44,7 @@ public class sugerenciaRvActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
-
+        //Verifica si el intent que llamo a este Activity tiene algo relevante
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
             if(intent.containsKey("UID")){
@@ -55,8 +61,10 @@ public class sugerenciaRvActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * regresa al Activity de la clase addFilmMultiplayer
+     * @param view
+     */
     public void volverCrear(View view) {
         Intent intent = new Intent(getApplicationContext(),addFilmMultiplayer.class);
         intent.putExtra("UID",UIDTEMP);

@@ -38,16 +38,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-
+/**
+ * Activity donde se muestran listadas las peliculas de la base de datos de Firebase
+ */
 public class peliculasMultiplayerRv extends AppCompatActivity {
-
+//variables globales
     private String uid,name;
 
     //Componentes
     private ImageView imgPhoto;
     private Toolbar toolbar;
 
-    //Listar de DataBase
+    //Componentes para Listar de DataBase
     private SwipeRefreshLayout swipeRefreshLayout;
     private adaptadorRecyclerViewMulti adapter;
     private RecyclerView recyclerView;
@@ -67,8 +69,9 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
         adapter = new adaptadorRecyclerViewMulti(this);
         recyclerView.setAdapter(adapter);
         peliculaDao = new daoPelicula();
-
+        //FIN
         loadData();
+        //Revisa si el intent que activo este Activiry contiene algo importante
         try{
             Bundle intent = getIntent().getExtras();
             if(intent!=null){
@@ -78,6 +81,7 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference userReference = databaseReference.child("Users").child(intent.getString("UID"));
+                //Busca al usuario en la tabla Users de la base de datos y trae su foto de perfil  y su nombre
                 try {
                     Task<DataSnapshot> user = userReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                         @Override
@@ -94,7 +98,7 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
                 }
 
             }
-
+            //Lleva a la vista del top 3
             imgPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +113,9 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
 
     }
 
-    //cargar las peliculas al ArrayList y enviarlas al Adapter
+    /**
+     * cargar las peliculas de la base de datos al ArrayList y enviarlas al Adapter
+     */
     private void loadData(){
         peliculaDao.getFilms().addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,6 +137,9 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
         });
     }
 
+    /**
+     * Inicializa los componentes de la interfaz grafica
+     */
     private void AdeptusAstartes(){
         imgPhoto = findViewById(R.id.ImgProfilePhMulti);
         swipeRefreshLayout = findViewById(R.id.swip);
@@ -139,7 +148,7 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
     }
 
 
-    //toolbar
+    //Inicio Metodos toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.multiplayer_menu,menu);
@@ -169,14 +178,19 @@ public class peliculasMultiplayerRv extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    //Fin toolbar
+    //Fin Metodos toolbar
 
+    /**
+     * Hace las peticiones a la api, y deja los datos esperando en la lIsta de la clase ListaYMetodoDeLlenado
+     * para hacer mas eficiente el llamado de todos estos datos
+     * Pero aun no se utilizan los datos obtenidos de la API
+     */
     private void datos(){
 
         MyApiClient.makeApiRequest(this, new MyApiClient.MyApiCallback<Movie>() {
             @Override
             public void onSuccess(Movie response) {
-                // Procesa la respuesta exitosa aquí
+                // Procesar la respuesta exitosa aquí
                 Toast.makeText(getApplicationContext(), "Llegada 1", Toast.LENGTH_SHORT).show();
             }
 

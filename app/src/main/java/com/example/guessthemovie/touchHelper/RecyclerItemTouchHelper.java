@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guessthemovie.viewHolder.viewHolder_Carditem1;
 
+/**
+ * Clase que da funcionalidad al swipe a los lados del recyclerView
+ */
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private RecyclerItemTouchHelperListener listener;

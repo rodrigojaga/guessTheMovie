@@ -8,6 +8,10 @@ import com.google.firebase.database.Query;
 
 import java.util.HashMap;
 
+/**
+ * Clase que hace la conexion con la base de datos de Firebase
+ * Especificamente con la tabla Users
+ */
 public class daoJugador {
 
     private DatabaseReference databaseReference;

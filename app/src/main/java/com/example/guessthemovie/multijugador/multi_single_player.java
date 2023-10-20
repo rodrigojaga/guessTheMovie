@@ -12,19 +12,25 @@ import android.widget.Toast;
 import com.example.guessthemovie.ActivityConRecycler.peliculasGuardadasRecyclerView;
 import com.example.guessthemovie.R;
 
+/**
+ * Submenu donde se le permite al usuario elegir entre Salir del juego, multijugador o SinglePlayer
+ */
 public class multi_single_player extends AppCompatActivity implements View.OnClickListener {
-
+    //componentes de la interfaz grafica
     private Button btnSingle,btnMulti;
+    //variiable global
     private String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_single_player);
+        //Declaracion de los componentes
         btnSingle = findViewById(R.id.btnUnJugador);
         btnMulti = findViewById(R.id.btnMultiplayer);
+        //Metodo onClick
         btnMulti.setOnClickListener(this);
         btnSingle.setOnClickListener(this);
-
+        //Revisa en caso de que el Intent traiga algo importante
         try{
 
             Bundle intent = getIntent().getExtras();
@@ -38,10 +44,18 @@ public class multi_single_player extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * Cierra la aplicacion
+     * @param view
+     */
     public void nucazo(View view) {
         finishAffinity();
     }
 
+    /**
+     * Dependiendo del boton precionado, este lleva al multijugador, singleplayer
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btnUnJugador){

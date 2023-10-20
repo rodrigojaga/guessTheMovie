@@ -28,15 +28,24 @@ import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+/**
+ * Adaptador para el recycler para la vista de la clase peliculasGuardadasRecyclerView
+ * utiliza el viewHolder_CardItem1 para listar los componentes
+ */
 public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem1> {
-
+    //Variables globales
     List<pelicula> ListaObjeto;
     String idDef;
 
+    /**
+     * Constructor que asigna los datos a la lista local
+     * @param listaObjeto
+     */
     public adaptadorRecycler1(List<pelicula> listaObjeto) {
         ListaObjeto = listaObjeto;
     }
 
+    //Metodos del RecyclerView
     @NonNull
     @Override
     public viewHolder_Carditem1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,7 +57,7 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
     @Override
     public void onBindViewHolder(@NonNull viewHolder_Carditem1 holder, int position) {
 
-
+        //Si en la lista no existe una imagen para el imageView, este tomara una imagen por defecto
         if(ListaObjeto.get(position).getImagen1()==null ){
 
             holder.img1.setImageResource(R.drawable.noellelogo);
@@ -70,12 +79,12 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
         }else{
             holder.img3.setImageBitmap(ListaObjeto.get(position).getImagen3());
         }
-
+        //asigna valores
         idDef = ListaObjeto.get(position).getId().trim().toString();
         String pistas = ListaObjeto.get(position).getlLstPistas();
         String nombre = ListaObjeto.get(position).getlStrNombrePelicula();
 
-
+        //Listener en caso de que una de las imagenes sea presionada
         holder.img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +98,7 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
                 handleClick(v,position,idDef);
             }
         });
+        //Este listner activa la vista para la edicion de la pelicula
         holder.img3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +128,13 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
     public int getItemCount() {
         return ListaObjeto.size();
     }
+//Fin metodos del RecyclerView
 
+    /**
+     * mETODO para eliminar un registro de la base de datos
+     * @param adapterPosition
+     * @param context
+     */
     public void removeItem(int adapterPosition, Context context) {
         String a = ListaObjeto.get(adapterPosition).getId();
         ListaObjeto.remove(adapterPosition);
@@ -129,6 +145,12 @@ public class adaptadorRecycler1 extends RecyclerView.Adapter<viewHolder_Carditem
 
     }
 
+    /**
+     * Lleva al la vista de juego con un Intent
+     * @param v
+     * @param position
+     * @param id
+     */
     private void handleClick(View v, int position,String id) {
         Context context = v.getContext();
         Intent intent = new Intent(context, activityJuego.class);

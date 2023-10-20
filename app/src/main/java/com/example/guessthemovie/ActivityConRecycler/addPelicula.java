@@ -30,6 +30,10 @@ import com.example.guessthemovie.POO.pelicula;
 import com.example.guessthemovie.R;
 import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
 
+/**
+ * Vista compartida para las opciones de Crear peliculas nuevas y modificar peliculas
+ * existentes
+ */
 public class addPelicula extends AppCompatActivity {
 
     //componentes
@@ -49,9 +53,9 @@ public class addPelicula extends AppCompatActivity {
 
     //modo de edicion
     private boolean cambioAModificacion;
-    private String strIdPelicula, strNombre, strPista,UIDTEMP;
-    private Bitmap imgPrime;
+    private String strIdPelicula,UIDTEMP;
 
+    //Acceso a Base de datos local
     private pelicula pa;
     private peliculasDB pelis;
 
@@ -60,6 +64,7 @@ public class addPelicula extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pelicula);
         cadenaPista = new StringBuilder();
+        //declaracion de componentes
         img1 = findViewById(R.id.imagen1);
         img2 = findViewById(R.id.imagen2);
         img3 = findViewById(R.id.imagen3);
@@ -69,6 +74,8 @@ public class addPelicula extends AppCompatActivity {
         agregar = findViewById(R.id.agregarPelicula);
         DBPeticiones db = new DBPeticiones();
         pelis = new peliculasDB(this);
+        //En caso de que el intent que activo este Activity contenga algo
+        //revisa si debe entrar en el modo de edicion o de creacion
         try {
             cambioAModificacion = false;
             Bundle intent = getIntent().getExtras();
@@ -90,7 +97,7 @@ public class addPelicula extends AppCompatActivity {
         }
 
 
-
+        //Listeners del boton agregar
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +106,10 @@ public class addPelicula extends AppCompatActivity {
         });
     }
 
+    /**
+     * En caso de que se active el modo de edicion, este metodo lista los datos para cambiarlos
+     * @param pa Objeto recibido del Intent
+     */
     private void flashPoint(pelicula pa) {
 
         txtPeliculaNombre.setText(pa.getlStrNombrePelicula());
@@ -107,7 +118,10 @@ public class addPelicula extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Elige una imagen para el ImageView
+     * @param view
+     */
     public void selectImageForImageView(View view) {
         cargarImagen(1);
     }
@@ -120,11 +134,26 @@ public class addPelicula extends AppCompatActivity {
         cargarImagen(3);
     }
 
+    /**
+     * Permite al usuario seleccionar una foto de su galeria para subirla a la aplicacion
+     * @param imageViewID
+     */
     private void cargarImagen(int imageViewID) {
         Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent.createChooser(intent,"Seleccione una aplicacion"),imageViewID);
     }
 
+    /**
+     * Toma la imagen obtenida de la seleccion del usuario y la pone en el ImageView respectivo
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     *
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,6 +175,10 @@ public class addPelicula extends AppCompatActivity {
         }
     }
 
+    /**
+     * Vuelve a la vista peliculasGuardadasRecyclerView
+     * @param view
+     */
     public void volver(View view) {
 
         Intent volver = new Intent(this, peliculasGuardadasRecyclerView.class);
@@ -154,6 +187,10 @@ public class addPelicula extends AppCompatActivity {
 
     }
 
+    /**
+     * permite agregar una nueva pista al usuario, separandolas por el carqacter |
+     * @param view
+     */
     public void armarPista(View view) {
 
         try{
@@ -173,13 +210,15 @@ public class addPelicula extends AppCompatActivity {
 
     }
 
+    /**
+     * En caso de estar en modo de creacion, toma los datos y crea una nueva pelicula
+     * En caso de estar en modeo de edicion, toma los datos y actualiza la pelicula seleccionada
+     */
     private void obtenerDatos(){
 
         String nombrePelicula = txtPeliculaNombre.getText().toString().trim();
         String pistaCadena = "";
         String img1String = comprobacion(img1HasChanged,(Drawable) img1.getDrawable());
-//        String img2String = comprobacion(img2HasChanged,img2.getDrawable());
-//        String img3String = comprobacion(img3HasChanged,img3.getDrawable());
 
         Intent intent = new Intent(this, peliculasGuardadasRecyclerView.class);
 
@@ -198,7 +237,7 @@ public class addPelicula extends AppCompatActivity {
             DBPeticiones peticiones = new DBPeticiones();
             if(cambioAModificacion){
                 cambioAModificacion = false;
-                peticiones.UpdateMovie(strIdPelicula,nombrePelicula,img1String,"","",pistaCadena,addPelicula.this);
+                peticiones.UpdateMovie(strIdPelicula,nombrePelicula,img1String,null,null,pistaCadena,addPelicula.this);
             }else{
                 peticiones.insertMovie(nombrePelicula,img1String,"","",pistaCadena,addPelicula.this);
             }
@@ -210,6 +249,13 @@ public class addPelicula extends AppCompatActivity {
 
     }
 
+    /**
+     * Revisa si un ImageView esta ocupado, en caso de estarlo convierte la imagen a una cadena de
+     * texto para guardarla en la base de datos
+     * @param comprobar booleano que dice si esta libre (false) o no (true)
+     * @param drawable
+     * @return
+     */
     private String comprobacion(boolean comprobar, Drawable drawable){
         if(comprobar){
             Bitmap bm = ((BitmapDrawable) drawable).getBitmap();

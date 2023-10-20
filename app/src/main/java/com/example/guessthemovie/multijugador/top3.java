@@ -23,19 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class top3 extends AppCompatActivity {
-
+//componentes de la interfaz grafica
     TextView txtNombre, txtPuntaje;
     TextView txtNombre2, txtPuntaje2;
     TextView txtNombre3, txtPuntaje3;
     ImageView imgCamp;
 
+//variable global
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top3);
-
+        //Inicializar componentes
         txtNombre = findViewById(R.id.txtNombreRK);
         txtPuntaje = findViewById(R.id.txtPuntajeRK);
         imgCamp = findViewById(R.id.imgCamp);
@@ -43,11 +44,11 @@ public class top3 extends AppCompatActivity {
         txtPuntaje2 = findViewById(R.id.txtPuntajeRK2);
         txtNombre3 = findViewById(R.id.txtNombreRK3);
         txtPuntaje3 = findViewById(R.id.txtPuntajeRK3);
-
+        //instancia de la clase que se conecta con la base de datos
         daoPuntaje dao = new daoPuntaje();
 
 
-
+        //lista los datos de puntajes
         dao.getScore().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -57,7 +58,8 @@ public class top3 extends AppCompatActivity {
                     puntajes.add(pj);
 
                 }
-
+                //los asigna a nombres de los puestos mas altos al TOP 3
+                //Probar
                 txtNombre.setText(puntajes.get(2).getNombre());
                 txtPuntaje.setText(puntajes.get(2).getPuntaje());
 
@@ -73,6 +75,7 @@ public class top3 extends AppCompatActivity {
 
             }
         });
+        //Revisa si el intent que llamo al Activity tiene algo importante
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
             if (intent.containsKey("UID")) {
@@ -81,7 +84,10 @@ public class top3 extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Regresa al Activity peliculasMultiplayerRv
+     * @param view
+     */
     public void volverAntes(View view) {
         Intent intent = new Intent(getApplicationContext(), peliculasMultiplayerRv.class);
         intent.putExtra("UID",uid);

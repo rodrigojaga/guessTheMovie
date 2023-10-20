@@ -19,14 +19,21 @@ import java.util.List;
 
 import com.example.guessthemovie.metodosPublicos.convertir_desonvertirBit_a_str;
 
+/**
+ * Clase que contiene todos los metodos necesarios para conectarse con la base de datos local
+ */
 public class DBPeticiones {
-
+//Conexion con la base de datos
     private peliculasDB pelis;
-
     private SQLiteDatabase database;
 
 
-
+    /**
+     * Permite obtener una plicula registrada en la base de datos unicamente con su id
+      * @param context
+     * @param id
+     * @return
+     */
     public pelicula getPeliculaPorID(Context context, String id) {
         pelis = new peliculasDB(context);
         database = pelis.getReadableDatabase();
@@ -76,7 +83,16 @@ public class DBPeticiones {
         return pelicula;
     }
 
-
+    /**
+     * Crea una nueva pelicula en la base de datos, tomando como requerimiento los datos necesarios
+     * para hacerlo
+     * @param nombrePelicula
+     * @param img1
+     * @param img2
+     * @param img3
+     * @param pista
+     * @param context
+     */
     public void insertMovie(String nombrePelicula, String img1, String img2, String img3, String pista, Context context){
         try {
             pelis = new peliculasDB(context);
@@ -97,6 +113,11 @@ public class DBPeticiones {
         }
     }
 
+    /**
+     * Lista todas las peliculas que hay en la base de datos y las mete un un ArrayList
+     * @param context
+     * @return
+     */
     public ArrayList<pelicula> getPeliculas(Context context){
         pelis = new peliculasDB(context);
         database = pelis.getWritableDatabase();
@@ -122,6 +143,11 @@ public class DBPeticiones {
         return null;
     }
 
+    /**
+     * Elimina una pelicula de la base de datos unicamente con su Id
+     * @param id
+     * @param context
+     */
     public void deleteMovie(int id,Context context){
         pelis = new peliculasDB(context);
         database = pelis.getWritableDatabase();
@@ -131,6 +157,16 @@ public class DBPeticiones {
         database.delete(pelis.TableName,selection,selectionArguments);
     }
 
+    /**
+     * Actualiza una pelicula tomando de los parametros los datos que necesita
+     * @param id
+     * @param nombrePelicula
+     * @param img1
+     * @param img2
+     * @param img3
+     * @param pista
+     * @param context
+     */
     public void UpdateMovie(String id,String nombrePelicula, String img1, String img2, String img3, String pista, Context context){
         try {
             pelis = new peliculasDB(context);
@@ -151,7 +187,11 @@ public class DBPeticiones {
         }
     }
 
-
+    /**
+     * comprueba si una imagen es null, si no lo es, transforma la imagen a un Bitmap
+     * @param imgStrAComprobar
+     * @return
+     */
     private Bitmap comprobacion(String imgStrAComprobar){
 
         if(imgStrAComprobar.isEmpty()||imgStrAComprobar.equals("")||imgStrAComprobar == null){
@@ -162,6 +202,11 @@ public class DBPeticiones {
 
     }
 
+    /**
+     * Separa una cadena mediante el caracter |
+     * @param cadena
+     * @return
+     */
     private List<String> separarCadena(String cadena) {
         String[] partes = cadena.split("\\|");
         return Arrays.asList(partes);

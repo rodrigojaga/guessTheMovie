@@ -1,5 +1,7 @@
 package com.example.guessthemovie.RealTimeDatabase;
 
+import android.graphics.Path;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,16 +21,27 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Clase que interactua directamente con la tabla puntaje de la base de datos de firebase
+ */
 public class daoPuntaje {
 
     private DatabaseReference databaseReference;
 
+    /**
+     * Realiza la conexion con la tabla puntaje
+     */
     public daoPuntaje() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference(puntaje.class.getSimpleName());
 
     }
 
+    /**
+     * Crea un nuevo record o actualiza el existente con el nuevo puntaje obtenido
+     * @param score
+     * @return
+     */
     public Task<Void> addOrUpdateScore(puntaje score) {
         DatabaseReference userReference = databaseReference.child(score.getNombre());
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,8 +67,12 @@ public class daoPuntaje {
         return null;
     }
 
+    /**
+     * Obtiene los 3 punteos mas altos
+     * @return
+     */
     public Query getScore(){
-        return databaseReference.orderByChild("puntaje").limitToFirst(3);
+        return databaseReference.orderByChild("puntaje").limitToLast(3);
     }
 
 }

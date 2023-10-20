@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guessthemovie.R;
-
+/**
+ * Clase que se emplea como modelo para mostrar los datos en el recyclerView de sugerenciasRvActivity
+ */
 public class viewHolder_CardItemSG extends RecyclerView.ViewHolder {
 
     public TextView txtTitle,txtOverView;

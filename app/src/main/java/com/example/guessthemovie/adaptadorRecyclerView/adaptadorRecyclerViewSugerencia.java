@@ -24,22 +24,25 @@ import com.example.guessthemovie.viewHolder.viewHolder_rvMultiplayer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+/**
+ * Adaptador para el recycler para la vista de la clase sugerenciasRvActivity
+ * utiliza el viewHolder_CardItemSG para listar los componentes
+ */
 public class adaptadorRecyclerViewSugerencia extends RecyclerView.Adapter<viewHolder_CardItemSG> {
 
+    //Variables globales
     private ArrayList<Movie> listaObject = new ArrayList<>();
     private String idPelicula;
     private Context context;
 
-
-
+    /**
+     * constructor que toma los datos para llenar la lista
+     * @param lista
+     */
     public adaptadorRecyclerViewSugerencia(ArrayList<Movie> lista){
         this.listaObject = lista;
     }
-
-
-
-
+//Inicio metodos recyclerView
     @NonNull
     @Override
     public viewHolder_CardItemSG onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -101,4 +104,5 @@ public class adaptadorRecyclerViewSugerencia extends RecyclerView.Adapter<viewHo
     public int getItemCount() {
         return listaObject.size();
     }
+//FIN metodos recyclerView
 }

@@ -2,8 +2,11 @@ package com.example.guessthemovie.POO;
 
 import java.util.List;
 
+/**
+ * Clase que contiene los atributos utiles para la interaccion con la API
+ */
 public class Movie {
-
+    //Atributos necesarios para la interaccion con los datos de la API
     private boolean adult;
     private String backdropPath;
     private List<Integer> genreIds;
@@ -19,7 +22,23 @@ public class Movie {
     private double voteAverage;
     private int voteCount;
 
-    // Constructor
+    /**
+     * Constructor de la clase MOVIE
+     * @param adult
+     * @param backdropPath
+     * @param genreIds
+     * @param id
+     * @param originalLanguage
+     * @param originalTitle
+     * @param overview
+     * @param popularity
+     * @param posterPath
+     * @param releaseDate
+     * @param title
+     * @param video
+     * @param voteAverage
+     * @param voteCount
+     */
     public Movie(boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, double popularity, String posterPath, String releaseDate, String title, boolean video, double voteAverage, int voteCount) {
         this.adult = adult;
         this.backdropPath = backdropPath;
@@ -37,6 +56,14 @@ public class Movie {
         this.voteCount = voteCount;
     }
 
+    /**
+     * Constructor con id, overview, posterPath, releaseDate, title
+     * @param id
+     * @param overview
+     * @param posterPath
+     * @param releaseDate
+     * @param title
+     */
     public Movie(int id, String overview, String posterPath, String releaseDate, String title) {
         this.id = id;
         this.overview = overview;
@@ -45,118 +72,126 @@ public class Movie {
         this.title = title;
     }
 
+    /**
+     * Constructor vacio
+     */
     public Movie() {
     }
-
+//Metodos get de los atributos de la clase Movie
     public boolean isAdult() {
         return adult;
-    }
-
-    public void setAdult(boolean adult) {
-        this.adult = adult;
     }
 
     public String getBackdropPath() {
         return backdropPath;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
     public List<Integer> getGenreIds() {
         return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getOriginalLanguage() {
         return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
     }
 
     public String getOriginalTitle() {
         return originalTitle;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
-
     public String getOverview() {
         return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
     }
 
     public double getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
-
     public String getPosterPath() {
         return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
     }
 
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public boolean isVideo() {
         return video;
     }
 
-    public void setVideo(boolean video) {
-        this.video = video;
-    }
-
     public double getVoteAverage() {
         return voteAverage;
-    }
-
-    public void setVoteAverage(double voteAverage) {
-        this.voteAverage = voteAverage;
     }
 
     public int getVoteCount() {
         return voteCount;
     }
 
+//Fin metodos get
+
+//Inicio Metodos set de los atributos de la clase Movie
+
+    public void setAdult(boolean adult) {
+        this.adult = adult;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setVideo(boolean video) {
+        this.video = video;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
+    //fin metodos set
 }

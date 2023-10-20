@@ -45,29 +45,31 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * Activity de listado de las peliculas creadas de forma local
+ */
 public class peliculasGuardadasRecyclerView extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
-
+    //Variables globales
     static ArrayList<pelicula> listarPelicula = new ArrayList<>();
     private RecyclerView rvListarPeliculas;
     LinearLayoutManager layout;
     adaptadorRecycler1 adaptador;
+    private String uid;
 
+    //Conexion con base de datos Local
     private peliculasDB pelis;
     private SQLiteDatabase database;
 
+    //Componentes de la vista
     private Toolbar toolbar;
     private ImageView imgPhoto;
-
-
-    private String uid;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_peliculas_guardadas_recycler_view);
-
+        //Metodos del recycler
         Log.d("errorInciio","Empezo la app");
         pelis = new peliculasDB(this);
         database = pelis.getWritableDatabase();
@@ -81,21 +83,21 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
             rvListarPeliculas.setLayoutManager(layout);
             DBPeticiones dbp = new DBPeticiones();
             listarPelicula.clear();
-
+            //Llena el recycler en caso de que existan datos
             for(pelicula det: dbp.getPeliculas(this)){
                 lista(det);
             }
-
-
             adaptador = new adaptadorRecycler1(listarPelicula);
             rvListarPeliculas.setAdapter(adaptador);
-
+            //Le pone un itemtoch al recycler para poder eliminar datos deslizando
             ItemTouchHelper.SimpleCallback simpleCallback =
                     new RecyclerItemTouchHelper(0,ItemTouchHelper.LEFT,peliculasGuardadasRecyclerView.this);
             new ItemTouchHelper(simpleCallback).attachToRecyclerView(rvListarPeliculas);
         }catch (Exception Ignored){
             Log.d("errorInciio",Ignored.getMessage());}
+        //FIN recycler
 
+        //Revisa si el intent que llamo a este Activity contiene algo
         try{
             Bundle intent = getIntent().getExtras();
             if(intent!=null){
@@ -105,12 +107,11 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference userReference = databaseReference.child("Users").child(intent.getString("UID"));
                 Task<DataSnapshot> user = userReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    //Asigna lo foto de perfil del usuario a la aplicacion
                     @Override
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         player user = dataSnapshot.getValue(player.class);
                         Picasso.get().load(user.getProfile()).into(imgPhoto);
-                        //textView.setText(user.getName());
-                        //Picasso.get().load(user.getProfile()).into(imageView);
                     }
                 });
 
@@ -122,7 +123,8 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
 
     }
 
-    //ToolBar
+    //Metodos para mostrar el ToolBar
+    //Esto siempre debe ser asi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -149,17 +151,23 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
 
         return super.onOptionsItemSelected(item);
     }
+    //Fin metodos ToolBar
 
+    /**
+     * Metodo para llnear la lista con las peliculas existentes
+     * @param peli
+     */
     private void lista(pelicula peli){
         listarPelicula.add(peli);
     }
 
-
-
-
-    //adicionales
-
-
+    /**
+     * Asigna la caracteristica de deslizar al Recycler
+     * utilizado para eliminar registros
+     * @param viewHolder
+     * @param direction
+     * @param position
+     */
     @Override
     public void onSwipe(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if(viewHolder instanceof viewHolder_Carditem1){
@@ -167,9 +175,6 @@ public class peliculasGuardadasRecyclerView extends AppCompatActivity implements
         }
     }
 
-    public void inicio(View view) {
-        Intent volver = new Intent(this, MainActivity.class);
-        startActivity(volver);
-    }
+
 
 }

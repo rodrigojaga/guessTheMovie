@@ -10,7 +10,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guessthemovie.R;
-
+/**
+ * Clase que se emplea como modelo para mostrar los datos en el recyclerView de peliculasMultiplayerRv
+ */
 public class viewHolder_rvMultiplayer extends RecyclerView.ViewHolder {
 
     public ImageView imgMulti;
